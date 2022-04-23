@@ -80,3 +80,38 @@ function add(num1, num2) {
 
 const result = add(2, 3);
 console.log(result);
+
+console.log("----------------");
+
+// 함수 표현식
+
+// showError(); // 표현식 이후에 호출해야 정상 작동한다.
+
+// let showError = function () {
+//   console.log("error");
+// };
+
+console.log("----------------");
+
+// 함수 선언문
+
+showError2(); // 선언문 이전에 호출해도 정상 작동한다.
+
+function showError2() {
+  console.log("error2");
+}
+
+// 화살표 함수
+
+let showError3 = () => {
+  console.log("error3");
+};
+
+showError3();
+
+// const plus = (num1, num2) => {
+//   const result = num1 + num2;
+//   return result;
+// }
+
+const plus = (num1, num2) => num1 + num2;

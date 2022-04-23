@@ -181,3 +181,259 @@ sayHello("Mike");
     - getName // 이름을 얻어옴
     - createUserData // 유저 데이터 생성
     - checkLogin // 로그인 여부 체크
+
+### 함수 선언문
+
+```javascript
+function sayHello() {
+  console.log("Hello");
+}
+sayHello();
+```
+
+- 어디서든 호출 가능 (호출을 선언문 위에 올려도 동작함)
+
+- js는 위에서부터 한 줄씩 코드를 읽으면서 실행하는데, 이렇게 순차적으로 실행되고 즉시 결과를 반환하는 프로그래밍 언어를 **인터프리터 언어(Interpreted language)** 라 한다.
+
+- **그렇다면 왜 호출을 선언문 위에 올려도 동작하는가?**
+
+  - js는 실행 전 코드의 모든 함수 선언문을 찾아 생성해놓는다.
+
+  - 눈에 보이는 건 아래에 있지만, 실제 함수를 사용할 수 있는 범위는 위로 올라가게 되는 것이다. 이를 **호이스팅(hoisting)** 이라 한다.
+    (코드 위치가 실제로 올라간다는 것은 아니다)
+
+### 함수 표현식
+
+```javascript
+let sayHello = function () {
+  console.log("Hello");
+};
+sayHello();
+```
+
+- 함수 선언문과는 다르게, 함수 표현식은 코드에 도달하면 생성된다. 그렇기 때문에 호출은 무조건 표현식보다 뒤에 있어야 실행된다.
+
+### 화살표 함수
+
+```javascript
+let add = (num1, num2) => {(
+  num1 + num2;
+)};
+```
+
+- function이 없어지고 화살표로 작성
+
+- return이 없어지고 소괄호로 작성 가능
+
+- return문이 한 줄이라면 괄호도 생략 가능
+
+- 인수가 하나라면 인수쪽 괄호 생략 가능
+
+- 인수가 없는 함수라면 괄호 생략 불가능
+
+- return문이 존재한다 해도, 이전 코드가 여러줄 있을 경우는 소괄호를 사용할 수 없다.
+
+## 객체 (object) // object.js 참고
+
+```javascript
+// 객체 생성
+const superman = {
+  name: "clark",
+  age: 33,
+};
+
+// 접근
+superman.name; // 'clark'
+superman["age"]; // 33
+
+// 추가
+superman.gender = "male";
+superman["hairColor"] = "black";
+
+// 삭제
+delete superman.hairColor;
+```
+
+- 객체는 중괄호로 작성하고, 키와 값(key, value)으로 구성된 프로퍼티가 들어간다. 각 프로퍼티는 쉼표로 구분한다.
+
+```javascript
+// 단축 프로퍼티
+const name = "clark";
+const age = 33;
+
+const superman = {
+  name, // name : name
+  age, // age : age
+  gender: "male",
+};
+
+// in 연산자
+"birthDay" in superman; // false
+"age" in superman; //true
+
+// for ... in 반복문
+for (let key in superman) {
+  console.log(key);
+  console.log(spuerman[key]);
+}
+```
+
+- 존재하지 않는 프로퍼티에 접근한다면 undefined가 나온다.
+
+- in 연산자를 사용하면 프로퍼티를 확인할 수 있다. (어떤 값이 넘어올 지 확신할 수 없을 때 사용한다)
+
+- for ... in 반복문을 사용하면 객체를 순회하면서 값을 얻어올 수 있다.
+
+## 객체의 메소드(method) & this // method.js 참고
+
+```javascript
+const superman = {
+  name: "clark",
+  age: 33,
+  // fly 함수가 superman 객체의 메소드이다!
+  // fly() 로 줄여서 작성할 수 있다 (function 키워드 생략 가능)
+  fly: function () {
+    console.log("날아갑니다");
+  },
+};
+
+superman.fly(); // 날아갑니다
+```
+
+- **메소드 : 객체 프로퍼티로 할당된 함수**
+
+- **객체와 메소드의 관계**
+
+```javascript
+const user = {
+  name: "Mike",
+  sayHello: function () {
+    // 이 방식은 문제가 발생할 수 있다!
+    // user 대신에 this를 사용해야 한다!
+    console.log(`Hello, I'm ${user.name}`);
+  },
+};
+
+// 여기의 user가 sayHello의 this가 된다!
+user.sayHello();
+```
+
+- **this는 실행하는 시점, 즉 런타임에 결정된다.**
+
+- **메소드를 화살표 함수로 선언하면 동작이 전혀 달라진다.**
+
+  - 화살표 함수는 일반 함수와는 달리 **자신만의 this를 가지지 않는다.**
+
+  - 화살표 함수 내부에서 this를 사용하면, 그 **this는 외부에서 값을 가져온다.**
+
+  - **객체의 메소드를 작성할 때는 화살표 함수를 쓰지 않는 것이 좋다.**
+
+```javascript
+let boy = {
+  name: "Mike",
+  sayHello: () => {
+    console.log(this); // 전역 객체를 가리킨다
+  },
+};
+// this != boy
+boy.sayHello();
+```
+
+- 브라우저 환경 전역 객체 : window
+
+- Node.js 전역 객체 : global
+
+## 배열 (array) // array.js 참고
+
+- 순서가 있는 리스트(list)
+
+- **배열을 탐색할 때는 고유 번호를 사용한다. 이를 인덱스(index)라 한다. 인덱스는 0부터 시작한다.**
+
+```javascript
+let students = ["철수", "영희", "영수"];
+
+console.log(students[0]); // 철수
+console.log(students[1]); // 영희
+console.log(students[2]); // 영수
+
+// 수정
+students[0] = "민정";
+
+console.log(students[0]); // 민정
+
+// 배열의 길이
+students.length;
+
+// push() : 배열 끝에 추가
+students.push("기영");
+console.log(students); // ["민정", "영희", "영수", "기영"]
+
+//pop() : 배열 끝 요소 제거
+students.pop();
+console.log(students); // ["민정", "영희", "영수"]
+
+// unshift() : 배열 앞에 추가
+students.unshift("철수");
+console.log(students); // ["철수", "민정", "영희", "영수"]
+
+// shift() : 배열 앞에 제거
+students.shift();
+console.log(students); // ["민정", "영희", "영수"]
+```
+
+- 배열의 특징
+
+  - 문자 뿐만 아니라 숫자, 객체, 함수 등도 포함할 수 있다.
+
+  ```javascript
+  // 예제
+  let arr = [
+    "민수", // string
+    3, // number
+    false, // boolean
+    {
+      // object
+      name: "Mike",
+      age: 30,
+    },
+    // function
+    function () {
+      console.log("TEST");
+    },
+  ];
+  ```
+
+- length : 배열의 길이(배열이 가지고 있는 요소의 갯수를 반환)
+
+- 배열의 메소드
+
+  - push() : 배열 맨 뒤에 요소를 추가해 주는 메소드
+
+  - pop() : 배열 맨 뒤 요소를 제거해 주는 메소드
+
+  - unshift() : 배열 맨 앞에 요소를 추가하는 메소드
+
+  - shift() : 배열 맨 앞에 요소를 제거하는 메소드
+
+- push와 unshift는 여러 요소를 한번에 추가할 수도 있다.
+
+- 배열을 사용하는 이유 중 하나는 반복을 위해서이다.
+
+  - length를 이용하여 배열의 길이를 알고 있으므로, for문을 사용할 수 있다.
+
+  - for ... of문은 for문보다는 간단하지만 인덱스를 못 얻는다는 단점이 있다.
+
+  ```javascript
+  // for문
+  let days = ["월", "화", "수"];
+  for (let index = 0; index < days.length; index++) {
+    console.log(days[index]);
+  }
+
+  // for ... of
+  let days = ["월", "화", "수"];
+  // 배열 days를 돌면서 요소를 day라는 이름으로 접근할 수 있다.
+  for (let day of days) {
+    console.log(day);
+  }
+  ```
