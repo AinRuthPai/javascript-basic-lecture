@@ -475,3 +475,79 @@ Reflect.ownKeys(user); // ["name", "age", Symbol(id)]
   Math.pow(2, 10); // 1024 : 2의 10승
   Math.sqrt(16); // 4
   ```
+
+## 문자열 메소드 // string.js 참고
+
+- length : 문자열 길이 (회원가입 시 아이디 길이 제한에 사용됨)
+
+- toUpperCase() / toLowerCase() : 모든 글자를 대문자 / 소문자로 변경
+
+- str.indexOf(text) : 문자를 인수로 받아 몇 번째에 위치하는지 알려준다.
+
+  ```javascript
+  let desc = "안녕하세요.";
+  desc.length; //6
+  // 특정 위치에 접근
+  desc[2]; // '하'
+  desc[4] = "용"; // 배열과 다르게 한 글자만 바꾸는 것은 허용되지 않는다.
+  // 아무 변화 없음!
+
+  let desc = "Hi guys. Nice to meet you.";
+
+  desc.toUpperCase(); // "HI GUYS. NICE TO MEET YOU."
+  desc.toLowerCase(); // "hi guys. nice to meet you."
+
+  desc.indexOf("to"); // 14
+  desc.indexOf("man"); // -1 : 찾는 문자가 없다면 -1이 반환됨
+  // 포함된 문자가 여러개라도 첫번째 위치만 반환된다.
+
+  if (desc.indexOf("Hi") > -1) {
+    // indexOf는 0을 반환하고 if문에서 0은 false
+    // 그러므로 이 문장은 출력되지 않는다.
+    // 그래서 항상 -1보다 큰가 로 비교해야 한다.
+    console.log("Hi가 포함된 문장입니다.");
+  }
+  ```
+
+- str.slice(n, m) : n부터 m까지 문자열을 반환한다. n은 시작점이고 m은 없으면 문자열 끝까지, 양수면 그 숫자까지(포함하지 않음), 음수면 끝에서부터 센다.
+
+- str.substring(n, m) : n과 m 사이 문자열을 반환한다. n과 m을 바꿔도 동작하므로, 그냥 두 숫자 사이의 문자열을 반환한다고 생각하면 된다. 음수를 허용하지 않는다. (음수는 0으로 인식한다)
+
+- str.substr(n, m) : n부터 시작해서 m개의 문자를 반환한다.
+
+- str.trim() : 앞,뒤의 공백을 제가한다. (사용자로부터 입력받을 때 사용됨)
+
+- str.repeat(n) : 문자열을 n번 반복한다.
+
+```javascript
+let desc = "abcdefg";
+
+desc.slice(2); // "cdefg"
+desc.slice(0, 5); // "abcde"
+desc.slice(2, -2); // "cde"
+
+desc.substring(2, 5); // "cde"
+desc.substring(5, 2); // "cde"
+
+desc.substr(2, 4); // "cdef"
+desc.substr(-4, 2); // "de"
+
+let desc = " coding     ";
+desc.trim(); // "coding"
+
+let hello = "hello!";
+hello.repeat(3); // "hello!hello!hello!"
+```
+
+- 문자열 비교
+
+  ```javascript
+  1 < 3; // true
+  // 아스키 코드에 의해서 결정
+  "a" < "c"; // true
+
+  // 아스키 코드 반환
+  "a".codePointAt(0); // 97
+  // 반대로 숫자 코드를 안다면 문자를 얻을 수 있다.
+  String.fromCodePoint(97); // "a"
+  ```
