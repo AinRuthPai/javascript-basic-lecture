@@ -355,7 +355,7 @@ Reflect.ownKeys(user); // ["name", "age", Symbol(id)]
 
 ## 숫자, 수학 메소드
 
-- toString() : 숫자를 문자열로 바꾼다. 괄호 안에 숫자를 넣으면, 그 숫자의 진법으로 변경된다.
+- toString() : **숫자를 문자열로 바꾼다.** 괄호 안에 숫자를 넣으면, 그 숫자의 진법으로 변경된다.
 
   ```javascript
   let num = 10;
@@ -451,7 +451,7 @@ Reflect.ownKeys(user); // ["name", "age", Symbol(id)]
   parseFloat(padding); // 18.5
   ```
 
-- Math.random() : 0 ~ 1 사이의 무작위 숫자를 생성한다.
+- Math.random() : **0 ~ 1 사이의 무작위 숫자를 생성한다.**
 
   ```javascript
   // 1 ~ 100 사이의 임의의 숫자를 뽑고 싶다면?
@@ -478,7 +478,7 @@ Reflect.ownKeys(user); // ["name", "age", Symbol(id)]
 
 ## 문자열 메소드 // string.js 참고
 
-- length : 문자열 길이 (회원가입 시 아이디 길이 제한에 사용됨)
+- length : **문자열 길이** (회원가입 시 아이디 길이 제한에 사용됨)
 
 - toUpperCase() / toLowerCase() : 모든 글자를 대문자 / 소문자로 변경
 
@@ -509,13 +509,13 @@ Reflect.ownKeys(user); // ["name", "age", Symbol(id)]
   }
   ```
 
-- str.slice(n, m) : n부터 m까지 문자열을 반환한다. n은 시작점이고 m은 없으면 문자열 끝까지, 양수면 그 숫자까지(포함하지 않음), 음수면 끝에서부터 센다.
+- str.slice(n, m) : **n부터 m까지 문자열을 반환한다.** n은 시작점이고 m은 없으면 문자열 끝까지, 양수면 그 숫자까지(포함하지 않음), 음수면 끝에서부터 센다.
 
-- str.substring(n, m) : n과 m 사이 문자열을 반환한다. n과 m을 바꿔도 동작하므로, 그냥 두 숫자 사이의 문자열을 반환한다고 생각하면 된다. 음수를 허용하지 않는다. (음수는 0으로 인식한다)
+- str.substring(n, m) : n과 m 사이 문자열을 반환한다. n과 m을 바꿔도 동작하므로, 그냥 **두 숫자 사이의 문자열을 반환한다고 생각하면 된다.** 음수를 허용하지 않는다. (음수는 0으로 인식한다)
 
 - str.substr(n, m) : n부터 시작해서 m개의 문자를 반환한다.
 
-- str.trim() : 앞,뒤의 공백을 제가한다. (사용자로부터 입력받을 때 사용됨)
+- str.trim() : **앞,뒤의 공백을 제거한다.** (사용자로부터 입력받을 때 사용됨)
 
 - str.repeat(n) : 문자열을 n번 반복한다.
 
@@ -551,3 +551,277 @@ hello.repeat(3); // "hello!hello!hello!"
   // 반대로 숫자 코드를 안다면 문자를 얻을 수 있다.
   String.fromCodePoint(97); // "a"
   ```
+
+## 배열 메소드 // array_method.js 참고
+
+- arr.splice(n, m) : n부터 시작하여 m개를 지우는 메소드
+
+- arr.splice(n, m, x) : 지운 뒤에 x의 자리에 있는 요소를 추가하는 메소드
+
+- arr.splice() : 삭제된 요소를 반환할수도 있다. (메소드를 사용할 때 값을 반환하는데, 그 값이 삭제된 요소의 배열이다)
+
+```javascript
+// n 시작 m 개 삭제
+let arr = [1, 2, 3, 4, 5];
+arr.splice(1, 2);
+console.log(arr); // [1,4,5]
+
+// 지운 뒤 x의 자리에 있는 요소 추가
+let arr = [1, 2, 3, 4, 5];
+arr.splice(1, 3, 100, 200);
+console.log(arr); // [1,100,200,5]
+
+let arr = ["나는", "철수", "입니다"];
+arr.splice(1, 0, "대한민국", "소방관");
+// 0과 1 사이에 삽입된다.
+// ["나는", "대한민국", "소방관", "철수", "입니다"]
+
+// 삭제된 요소 반환
+let arr = [1, 2, 3, 4, 5];
+let result = arr.splice(1, 2);
+console.log(arr); // [1,4,5]
+console.log(result); // [2,3]
+```
+
+- arr.slice(n, m) : n부터 m까지 반환 (m은 포함하지 않고 바로 앞자리를 의미한다. 작성하지 않으면 배열 끝까지를 의미한다.)
+
+  - 문자열의 slice와 똑같이 동작한다.
+
+- arr.concat(arr2, arr3 ...) : 인자로 주어진 배열이나 값들을 기존 배열에 합쳐서 새로운 배열을 반환한다.
+
+```javascript
+// slice
+let arr = [1, 2, 3, 4, 5];
+arr.slice(1, 4); // [2,3,4]
+
+// 괄호 안이 비어있다면 배열이 복사된다.
+let arr2 = arr.slice();
+console.log(arr2); // [1,2,3,4,5]
+
+// -------------------------------------
+
+// concat
+let arr = [1, 2];
+arr.concat([3, 4]); // [1,2,3,4]
+arr.concat([3, 4], [5, 6]); // [1,2,3,4,5,6]
+arr.concat([3, 4], 5, 6); // [1,2,3,4,5,6]
+```
+
+- arr.forEach(fn) : 배열의 반복을 for 문이나 for of 문을 사용했는데, **forEach로도 반복할 수 있다.**
+
+  - 함수를 인수로 받는다. 그 함수는 3개의 매개변수가 있는데, 첫 번째는 해당 요소이고 두 번째는 인덱스, 세 번째는 해당 배열 자체를 의미한다. 보통 1,2 번째만 사용한다.
+
+```javascript
+let users = ["Mike", "Tom", "Jane"];
+
+users.forEach((item, index, arr) => {
+  // 1. Mike, Tom, Jane / 2. 0, 1, 2 / 3. users
+});
+```
+
+- arr.indexOf / arr.lastIndexOf : 문자열의 indexOf와 사용법이 같다. 발견하면 해당 요소의 인덱스를 반환하고, 없으면 -1을 반환한다.
+
+- arr.includes() : **인덱스를 확인할 필요 없이 포함하는지 확인한다.**
+
+```javascript
+let arr = [1, 2, 3, 4, 5, 1, 2, 3];
+
+arr.indexOf(3); // 2
+
+// 인수가 2개인 경우, 두번째 인수는 시작 위치를 의미한다.
+arr.indexOf(3, 3); // 7
+
+// 끝에서부터 탐색
+arr.lastIndexOf(3); // 7
+
+// -------------------------------------
+
+let arr = [1, 2, 3];
+arr.includes(2); // true
+arr.includes(8); // false
+```
+
+- arr.find(fn) / arr.findIndex(fn) : indexOf처럼 찾는다는 의미는 동일하지만 복잡한 연산이 가능하도록 함수를 전달할 수 있다.
+  (짝수 찾기, 성인 찾기 등)
+
+  - **첫 번째 true값만 반환하고 끝난다. 만약 없으면 undefined를 반환한다.**
+
+  - findIndex는 해당 인덱스를 반환한다. 없으면 -1을 반환한다.
+
+- arr.filter(fn) : find는 하나만 찾았지만 **filter는 만족하는 모든 요소를 배열로 반환한다.** find와 사용법은 동일하다.
+
+- arr.reverse() : 배열 역순으로 재정렬 (최근 가입된 유저부터 보여준다거나 게시판에서 가장 최근에 작성된 글 순서로 정렬할 때 자주 사용된다.)
+
+```javascript
+// forEach
+
+let arr = ["Mike", "Tom", "Jane"];
+
+arr.forEach((name, index) => {
+  console.log(`${index + 1}. ${name}`);
+  // 1. Mike
+  // 2. Tom
+  // 3. Jane
+});
+
+// find
+let arr2 = [1, 2, 3, 4, 5, 6];
+
+const result = arr2.find((item) => {
+  // 짝수 찾기, return값이 true일 때 멈추므로 2만 반환된다.
+  return item % 2 === 0; // 2
+});
+
+console.log(result);
+
+// findIndex
+// 객체가 들어있는 배열의 경우는 indexOf로는 찾기 힘들다.
+let userList = [
+  { name: "Mike", age: 30 },
+  { name: "Jane", age: 27 },
+  { name: "Tom", age: 10 },
+];
+// 미성년자 찾기
+const result2 = userList.findIndex((user) => {
+  if (user.age < 19) {
+    return true;
+  }
+  return false;
+});
+
+console.log(result2); // 2
+
+// filter
+let arr3 = [1, 2, 3, 4, 5, 6];
+
+const result3 = arr2.filter((item) => {
+  // 짝수 찾기, filter는 모든 요소를 반환한다.
+  return item % 2 === 0; // 2
+});
+
+console.log(result3); // [2, 4, 6]
+
+let arr = [1, 2, 3, 4, 5];
+arr.reverse(); // [5,4,3,2,1]
+```
+
+- arr.map(fn) : 함수를 받아 특정 기능을 시행하고 새로운 배열을 반환한다.
+
+```javascript
+let userList = [
+  { name: "Mike", age: 30 },
+  { name: "Jane", age: 27 },
+  { name: "Tom", age: 10 },
+];
+
+// 매번 나이를 확인하는 것이 아닌 isAdult 라는 프로퍼티를 추가한 새로운 배열을 만들기로 함
+let newUserList = userList.map((user, index) => {
+  return Object.assign({}, user, {
+    id: index + 1,
+    isAdult: user.age > 19,
+  });
+});
+console.log(newUserList);
+```
+
+- arr.join() : 배열을 합쳐 문자열로 (인수로 전달하는 게 구분자이다. 아무것도 전달하지 않으면 쉼표로 구분된다.)
+
+```javascript
+let arr = ["안녕", "나는", "철수야"];
+
+let result = arr.join(" ");
+
+console.log(result); // 안녕 나는 철수야
+```
+
+- arr.split : 문자열을 나눠서 배열로 (인수로 전달하는 게 구분자이다. 빈 문자열을 입력하면 각 글자와 스페이스마다 나뉘어 출력된다.)
+
+```javascript
+const users = "Mike,Jane,Tom,Tony";
+
+const result = users.split(",");
+
+console.log(result); // ["Mike", "Jane", "Tom", "Tony"];
+```
+
+- Array.isArray() : 배열인지 아닌지 확인하기 위해 사용 (자바스크립트에서 배열은 객체에 속하기 때문에 typeof를 사용해서는 객체와 배열을 구분할 수 없다.)
+
+```javascript
+let user = {
+  name: "Mike",
+  age: 30,
+};
+
+let userList = ["Mike", "Tom", "Jane"];
+
+console.log(typeof user); // object
+console.log(typeof userList); // object
+
+console.log(Array.isArray(user)); // false
+console.log(Array.isArray(userList)); // true
+```
+
+- arr.sort(fn) : 배열을 재정렬함 (배열 자체가 변경되니 주의)
+
+  - sort는 함수를 인수로 받는다. (값을 비교해 줄 수 있는 함수 전달)
+
+```javascript
+let arr = [27, 8, 5, 13];
+
+arr.sort((a, b) => {
+  // 결과가 음수면(a가 더 작으면) a를 앞으로 보낸다.
+  // 0을 반환하면 제자리
+  // 결과가 양수면(b가 더 작으면) b를 앞으로 보낸다.
+  return a - b;
+});
+
+console.log(arr); // [5, 8, 13, 27]
+```
+
+- 보통 이런 함수를 만들어놓고 사용하기 보다는 Lodash같은 라이브러리를 많이 사용한다. 숫자, 문자, 객체 전부 원하는 기준으로 정렬해준다.
+  `_.sortBy(arr);`
+
+- arr.reduce(fn) : (누적 계산값, 현재값) => { return 계산값 };
+
+- arr.reduceRight() : reduce와 동일하나 배열 우측부터 실행한다는 차이점이 있다.
+
+```javascript
+// 배열의 모든 수 합치기
+
+let arr = [1, 2, 3, 4, 5];
+
+// for, for of, forEach
+let result = 0;
+arr.forEach((num) => {
+  result += num;
+});
+console.log(result); // 15
+
+// arr.reduce()
+const result2 = arr.reduce((prev, cur) => {
+  return prev + cur;
+  // 초기값 설정 : 0 / 작성하지 않으면 배열의 첫 번째가 들어가게 된다.
+}, 0);
+console.log(result2); // 15
+```
+
+```javascript
+// 성인만 골라서 새로운 배열을 생성
+let userList = [
+  { name: "Mike", age: 30 },
+  { name: "Tom", age: 10 },
+  { name: "Jane", age: 27 },
+  { name: "Sue", age: 26 },
+  { name: "Harry", age: 42 },
+  { name: "Steve", age: 60 },
+];
+
+let result = userList.reduce((prev, cur) => {
+  if (cur.age > 19) {
+    // 19살보다 나이가 크면 기존 배열에 push 해주고 return / 이대로 반복
+    prev.push(cur.name);
+  }
+  return prev;
+  // 초기값은 빈 배열
+}, []);
+```
